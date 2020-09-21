@@ -8,7 +8,20 @@ from kivy.core.window import Window
 from kivy.clock import Clock
 
 def collides(rect1, rect2):
-    pass
+    r1x = rect1[0][0]
+    r1y = rect1[0][1]
+    r2x = rect2[0][0]
+    r2y = rect2[0][1]
+    r1w = rect1[1][0]
+    r1h = rect1[1][1]
+    r2w = rect2[1][0]
+    r2h = rect2[1][1]
+
+    if(r1x<r2x+r2w and r1x+r1w>r2x and r1y<r2y+r2h and r1y+r1h>r2y):
+        return True
+    else:
+        return False
+
 
 class GameWidget(Widget):
 
@@ -19,6 +32,7 @@ class GameWidget(Widget):
         self._keyboard.bind(on_key_up=self._on_key_up)
         self.width = Window.width
         self.height = Window.height
+
         # self.player.speed_modifier = 1
         with self.canvas:
             self.player = Rectangle(pos =(self.width/2-50,self.height/2-50), size=(100,100))
@@ -43,6 +57,7 @@ class GameWidget(Widget):
     def move_step(self, dt):
         currentx = self.player.pos[0]
         currenty = self.player.pos[1]
+        oldpos = (currentx, currenty)
         newx = currentx
         newy = currenty
 
@@ -56,12 +71,14 @@ class GameWidget(Widget):
             newx -= step_size
         if "d" in self.keysPressed and newx<self.width-100:
             newx += step_size
-        self.player.pos = (newx, newy)
-
-        if collides((self.player.pos,self.player.size), (self.enemy.pos, self.enemy.size)):
-            print("Colliding")
-        else:
-            print("Not colliding")
+        # self.player.pos = (newx, newy)
+        newpos = (newx, newy)
+        # if "w" in self.keysPressed or "d" in self.keysPressed or "a" in self.keysPressed or "s" in self.keysPressed:
+        if newx != currentx or newy != currenty:
+            if collides((newpos,self.player.size), (self.enemy.pos, self.enemy.size)):
+                self.player.pos = oldpos
+            else:
+                self.player.pos = newpos
 
 class MyApp(App):
     def build(self):
