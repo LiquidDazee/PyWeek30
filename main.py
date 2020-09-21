@@ -19,7 +19,7 @@ class GameWidget(Widget):
         self._keyboard.bind(on_key_up=self._on_key_up)
         self.width = Window.width
         self.height = Window.height
-        self.speed_modifier = 1
+        # self.player.speed_modifier = 1
         with self.canvas:
             self.player = Rectangle(pos =(self.width/2-50,self.height/2-50), size=(100,100))
             self.enemy = Rectangle(pos = (400,400), size = (30, 30))
@@ -46,7 +46,7 @@ class GameWidget(Widget):
         newx = currentx
         newy = currenty
 
-        step_size = 100*speed_modifier*dt
+        step_size = 100*dt
 
         if "w" in self.keysPressed and newy<self.height-100:
             newy += step_size
