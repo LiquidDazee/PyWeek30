@@ -14,7 +14,7 @@ class Player(pg.sprite.Sprite):
         self.y = y
 
     def get_keys(self):
-        self.vc, self.vy = 0,0
+        self.vx, self.vy = 0,0
         keys = pg.key.get_pressed()
         if keys[pg.K_LEFT] or keys[pg.K_a]:
             self.vx = -PLAYER_SPEED
@@ -34,7 +34,6 @@ class Player(pg.sprite.Sprite):
         for wall in self.game.walls:
             if wall.x == self.x + dx and wall.y == self.y + dy:
                 return True
-
         return False
 
     def update(self):
