@@ -52,7 +52,6 @@ class Player(pg.sprite.Sprite):
         self.get_keys()
         self.x += self.vx * self.game.dt
         self.y += self.vy * self.game.dt
-        self.rect.topleft = (self.x,self.y)
         self.rect.x = self.x
         self.collide_with_walls('x')
         self.rect.y = self.y
