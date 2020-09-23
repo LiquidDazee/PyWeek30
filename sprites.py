@@ -68,17 +68,23 @@ class Mob(pg.sprite.Sprite):
         self.acc = vec(0, 0)
         self.rect.center = self.pos
         self.rot = 0
+        self.target = game.player
+
 
     def update(self):
-        self.rot = (self.game.player.pos - self.pos).angle_to(vec(1, 0))
-        self.image = pg.transform.rotate(pg.transform.scale(self.game.mob_img, (TILESIZE, TILESIZE)), self.rot)
-        self.rect = self.image.get_rect()
-        self.rect.center = self.pos
-        self.acc = vec(MOB_SPEED).rotate(-self.rot)
-        self.acc += self.vel * -1 
-        self.vel += self.acc * self.game.dt
-        self.pos += self.vel * self.game.dt + 0.5 * self.acc * self.game.dt ** 2
-        self.rect.center = self.pos
+        target_dist = self.target.pos - self.pos
+        if target_dist.length_squared() < DETECT_RADIUS**2:
+            self.rot = target_dist.angle_to(vec(1, 0))
+            self.image = pg.transform.rotate(pg.transform.scale(self.game.mob_img, (TILESIZE, TILESIZE)), self.rot)
+            self.rect = self.image.get_rect()
+            self.rect.center = self.pos
+            self.acc = vec(MOB_SPEED).rotate(-self.rot)
+            self.acc += self.vel * -1 
+            self.vel += self.acc * self.game.dt
+            self.pos += self.vel * self.game.dt + 0.5 * self.acc * self.game.dt ** 2
+            self.rect.center = self.pos
+        else:
+            pass #add path thingie 
 
 class Wall(pg.sprite.Sprite):
     def __init__(self, game, x, y):
