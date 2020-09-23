@@ -5,6 +5,7 @@ from settings import *
 from sprites import *
 from tilemap import *
 
+
 class Game:
     def __init__(self):
         pg.init()
@@ -16,7 +17,10 @@ class Game:
 
     def load_data(self):
         game_folder = path.dirname(__file__)
+        img_folder = path.join(game_folder, 'img')
         self.map = Map(path.join(game_folder, 'map.txt'))
+        self.player_img = pg.image.load(path.join(img_folder, PLAYER_IMG)).convert_alpha()
+
 
     def new(self):
         # init all var and do all the setup for a new game
