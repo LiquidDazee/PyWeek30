@@ -21,3 +21,6 @@ GRIDHEIGHT = HEIGHT / TILESIZE
 # player settings
 PLAYER_SPEED = 300
 PLAYER_IMG = 'manBlue.png'
+
+# mob settings
+MOB_IMG = 'manBlue.png'
