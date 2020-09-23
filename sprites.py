@@ -64,13 +64,20 @@ class Mob(pg.sprite.Sprite):
         self.image = pg.transform.scale(game.mob_img, (TILESIZE, TILESIZE))
         self.rect = self.image.get_rect()
         self.pos = vec(x, y) * TILESIZE
+        self.vel = vec(0, 0)
+        self.acc = vec(0, 0)
         self.rect.center = self.pos
         self.rot = 0
 
     def update(self):
         self.rot = (self.game.player.pos - self.pos).angle_to(vec(1, 0))
-        self.image = pg.transform.rotate(self.game.mob_img, self.rot)
+        self.image = pg.transform.rotate(pg.transform.scale(self.game.mob_img, (TILESIZE, TILESIZE)), self.rot)
         self.rect = self.image.get_rect()
+        self.rect.center = self.pos
+        self.acc = vec(MOB_SPEED).rotate(-self.rot)
+        self.acc += self.vel * -1 
+        self.vel += self.acc * self.game.dt
+        self.pos += self.vel * self.game.dt + 0.5 * self.acc * self.game.dt ** 2
         self.rect.center = self.pos
 
 class Wall(pg.sprite.Sprite):
