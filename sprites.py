@@ -8,7 +8,6 @@ class Player(pg.sprite.Sprite):
         self.groups = game.all_sprites
         pg.sprite.Sprite.__init__(self,self.groups)
         self.game = game
-        # self.image = game.player_img
         self.image = pg.transform.scale(game.player_img, (TILESIZE, TILESIZE)) #increase sprite size to tilesize
         self.rect = self.image.get_rect()
         self.vel = vec(0,0)
@@ -61,7 +60,6 @@ class Mob(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.path = deque([vec(200,200), vec(200,600),vec(600,600),vec(600,200)])
         self.nextpos = self.path.popleft()
-        # self.nextpos = (300,300)
         self.groups = game.all_sprites, game.mobs
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
@@ -90,43 +88,23 @@ class Mob(pg.sprite.Sprite):
         else:
             self.dist = self.nextpos - self.pos
             if not (-5<self.dist.x<5 and -5<self.dist.y<5):
-                # move_dist = self.nextpos - self.pos
-                # self.rot = move_dist.angle_to(vec(1, 0))
-                # self.image = pg.transform.rotate(pg.transform.scale(self.game.mob_img, (TILESIZE, TILESIZE)), self.rot)
-                # self.rect = self.image.get_rect()
-                # self.rect.center = self.pos
-                # self.acc = vec(MOB_SPEED).rotate(-self.rot)
-                # self.acc += self.vel * -1
-                # self.vel += self.acc * self.game.dt
-                # self.pos += self.vel * self.game.dt + 0.5 * self.acc * self.game.dt ** 2
-                # self.rect.center = self.pos
-                # self.dist = self.nextpos - self.pos
-                #print("Entered")
-                # print(self.dist.length_squared())
-                #print(self.dist)
                 if (self.dist.x) < -5 :
                     self.vel.x = -MOB_SPEED
-                    # print("1")
                 elif (self.dist.x) > 5:
                     self.vel.x = MOB_SPEED
-                    # print("2")
                 else:
                     self.vel.x = 0
 
                 if (self.dist.y) < -5 :
                     self.vel.y = -MOB_SPEED
-                    # print(self.dist.y)
                 elif (self.dist.y) > 5:
                     self.vel.y = MOB_SPEED
-                    # print(self.dist.y)
                 else:
                     self.vel.y = 0
-                #print(self.dist.y)
                 self.vel *= 0.7071
                 self.pos += self.vel * self.game.dt
                 self.rect.center = self.pos
             else:
-                print("Else")
                 self.path.append(self.nextpos)
                 self.nextpos = self.path.popleft()
 
