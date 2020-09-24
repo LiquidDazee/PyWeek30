@@ -64,7 +64,7 @@ class Mob(pg.sprite.Sprite):
         self.image = pg.transform.scale(game.mob_img, (TILESIZE, TILESIZE))
         self.rect = self.image.get_rect()
         self.pos = vec(x, y) * TILESIZE
-        self.vel = vec(0, 0)
+        self.vel = vec(-MOB_SPEED, 0)
         self.acc = vec(0, 0)
         self.rect.center = self.pos
         self.rot = 0
@@ -84,14 +84,32 @@ class Mob(pg.sprite.Sprite):
             self.pos += self.vel * self.game.dt + 0.5 * self.acc * self.game.dt ** 2
             self.rect.center = self.pos
         else:
-            self.vel.x = -MOB_SPEED
-            self.pos += self.vel * self.game.dt 
-            self.rect.center = self.pos
-            # if(self.rect.center[0] <= 100):
-            #     self.vel.x = MOB_SPEED
-            #     self.rect.center += self.vel * self.game.dt
+            if self.rect.center[0]>= 150 and self.rect.center[1] :
+                self.vel.x = 
 
-            #Can be bound to area by giving x and y a limit
+
+        # enemy_time = pg.time.get_ticks()
+        # if enemy_time % 3000 == 0:
+        #     t = rand(2000,4000)
+         
+        # if enemy_time % t*2 <= t:   
+        #     self.vel.x = -MOB_SPEED
+        #     self.pos += self.vel * self.game.dt 
+        #     self.rect.center = self.pos
+    
+        # elif enemy_time % t*2 >= t:
+        #     self.vel.x = MOB_SPEED
+        #     self.pos += self.vel * self.game.dt 
+        #     self.rect.center = self.pos
+               
+        #     #print(enemy_time)
+        #     # if(self.rect.center[0] <= 100):
+        #     #     self.vel.x = MOB_SPEED
+        #     #     self.repgct.center += self.vel * self.game.dt
+
+        #     #Can be bound to area by giving x and y a limit
+
+      
 
 class Wall(pg.sprite.Sprite):
     def __init__(self, game, x, y):
