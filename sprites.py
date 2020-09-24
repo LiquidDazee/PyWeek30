@@ -1,5 +1,6 @@
 import pygame as pg
 from settings import *
+from collections import deque
 vec = pg.math.Vector2
 
 class Player(pg.sprite.Sprite):
@@ -58,6 +59,9 @@ class Player(pg.sprite.Sprite):
 
 class Mob(pg.sprite.Sprite):
     def __init__(self, game, x, y):
+        # self.path = deque([vec(300,300), vec(200,400),vec(400,400),vec(400,200)])
+        # self.nextpos = self.path.popleft()
+        # self.nextpos = (300,300)
         self.groups = game.all_sprites, game.mobs
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
@@ -79,29 +83,75 @@ class Mob(pg.sprite.Sprite):
             self.rect = self.image.get_rect()
             self.rect.center = self.pos
             self.acc = vec(MOB_SPEED).rotate(-self.rot)
-            self.acc += self.vel * -1 
+            self.acc += self.vel * -1
             self.vel += self.acc * self.game.dt
             self.pos += self.vel * self.game.dt + 0.5 * self.acc * self.game.dt ** 2
             self.rect.center = self.pos
-        else:
-            if self.rect.center[0]>= 150 and self.rect.center[1] :
-                self.vel.x = 
+        # else:
+        #     if self.pos != self.nextpos:
+        #         move_dist = self.nextpos - self.pos
+        #         self.rot = move_dist.angle_to(vec(1, 0))
+        #         self.image = pg.transform.rotate(pg.transform.scale(self.game.mob_img, (TILESIZE, TILESIZE)), self.rot)
+        #         self.rect = self.image.get_rect()
+        #         self.rect.center = self.pos
+        #         self.acc = vec(MOB_SPEED).rotate(-self.rot)
+        #         self.acc += self.vel * -1
+        #         self.vel += self.acc * self.game.dt
+        #         self.pos += self.vel * self.game.dt + 0.5 * self.acc * self.game.dt ** 2
+        #         self.rect.center = self.pos
+                # print("Entered")
+                # self.dist = self.nextpos - self.pos
+                # print(self.pos)
+                # print(self.dist)
+                # if (self.dist.x) < 0 :
+                #     self.vel.x = -MOB_SPEED
+                #     print("1")
+                # elif (self.dist.x) > 0:
+                #     self.vel.x = MOB_SPEED
+                #     print("2")
+
+                # if (self.dist.y) < 0 :
+                #     self.vel.y = -MOB_SPEED
+                #     print(self.dist.y)
+                # elif (self.dist.y) > 0:
+                #     self.vel.y = MOB_SPEED
+                #     print(self.dist.y)
+                # print(self.dist.y)
+                # self.vel *= 0.7071
+                # self.pos += self.vel * self.game.dt
+                # self.rect.center = self.pos
+            # else:
+            #     # print("Else")
+            #     self.path.append(self.nextpos)
+            #     self.nextpos = self.popleft()
+
+                # self.direction = self.nextpos - self.pos
+                # self.acc = vec(MOB_SPEED).rotate(-1)
+                # self.acc += self.vel * -1
+                # self.vel += self.acc * self.game.dt
+                # self.pos += self.vel
+                # self.rect.center = self.pos
+            # else:
+                # self.path.append(self.nextpos)
+                # self.nextpos = self.popleft()
+            # if self.rect.center[0]>= 150 and self.rect.center[1] :
+            #     self.vel.x =
 
 
         # enemy_time = pg.time.get_ticks()
         # if enemy_time % 3000 == 0:
         #     t = rand(2000,4000)
-         
-        # if enemy_time % t*2 <= t:   
+
+        # if enemy_time % t*2 <= t:
         #     self.vel.x = -MOB_SPEED
-        #     self.pos += self.vel * self.game.dt 
+        #     self.pos += self.vel * self.game.dt
         #     self.rect.center = self.pos
-    
+
         # elif enemy_time % t*2 >= t:
         #     self.vel.x = MOB_SPEED
-        #     self.pos += self.vel * self.game.dt 
+        #     self.pos += self.vel * self.game.dt
         #     self.rect.center = self.pos
-               
+
         #     #print(enemy_time)
         #     # if(self.rect.center[0] <= 100):
         #     #     self.vel.x = MOB_SPEED
@@ -109,7 +159,7 @@ class Mob(pg.sprite.Sprite):
 
         #     #Can be bound to area by giving x and y a limit
 
-      
+
 
 class Wall(pg.sprite.Sprite):
     def __init__(self, game, x, y):
