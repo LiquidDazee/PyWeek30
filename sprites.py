@@ -130,40 +130,6 @@ class Mob(pg.sprite.Sprite):
                 self.path.append(self.nextpos)
                 self.nextpos = self.path.popleft()
 
-                # self.direction = self.nextpos - self.pos
-                # self.acc = vec(MOB_SPEED).rotate(-1)
-                # self.acc += self.vel * -1
-                # self.vel += self.acc * self.game.dt
-                # self.pos += self.vel
-                # self.rect.center = self.pos
-            # else:
-                # self.path.append(self.nextpos)
-                # self.nextpos = self.popleft()
-            # if self.rect.center[0]>= 150 and self.rect.center[1] :
-            #     self.vel.x =
-
-
-        # enemy_time = pg.time.get_ticks()
-        # if enemy_time % 3000 == 0:
-        #     t = rand(2000,4000)
-
-        # if enemy_time % t*2 <= t:
-        #     self.vel.x = -MOB_SPEED
-        #     self.pos += self.vel * self.game.dt
-        #     self.rect.center = self.pos
-
-        # elif enemy_time % t*2 >= t:
-        #     self.vel.x = MOB_SPEED
-        #     self.pos += self.vel * self.game.dt
-        #     self.rect.center = self.pos
-
-        #     #print(enemy_time)
-        #     # if(self.rect.center[0] <= 100):
-        #     #     self.vel.x = MOB_SPEED
-        #     #     self.repgct.center += self.vel * self.game.dt
-
-        #     #Can be bound to area by giving x and y a limit
-
 
 
 class Wall(pg.sprite.Sprite):
