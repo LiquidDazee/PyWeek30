@@ -79,7 +79,7 @@ class Mob(pg.sprite.Sprite):
         target_dist = self.target.pos - self.pos
         if target_dist.length_squared() < DETECT_RADIUS**2:
             self.rot = target_dist.angle_to(vec(1, 0))
-            self.image = pg.transform.rotate(pg.transform.scale(self.game.mob_img, (TILESIZE, TILESIZE)), self.rot)
+            self.image = pg.transform.rotate(pg.transform.scale(self.game.mob_img, (TILESIZE, TILESIZE)), 0)
             self.rect = self.image.get_rect()
             self.rect.center = self.pos
             self.acc = vec(MOB_SPEED).rotate(-self.rot)
@@ -101,9 +101,9 @@ class Mob(pg.sprite.Sprite):
                 # self.pos += self.vel * self.game.dt + 0.5 * self.acc * self.game.dt ** 2
                 # self.rect.center = self.pos
                 # self.dist = self.nextpos - self.pos
-                print("Entered")
+                #print("Entered")
                 # print(self.dist.length_squared())
-                print(self.dist)
+                #print(self.dist)
                 if (self.dist.x) < -5 :
                     self.vel.x = -MOB_SPEED
                     # print("1")
@@ -121,7 +121,7 @@ class Mob(pg.sprite.Sprite):
                     # print(self.dist.y)
                 else:
                     self.vel.y = 0
-                print(self.dist.y)
+                #print(self.dist.y)
                 self.vel *= 0.7071
                 self.pos += self.vel * self.game.dt
                 self.rect.center = self.pos
