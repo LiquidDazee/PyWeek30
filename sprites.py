@@ -84,7 +84,14 @@ class Mob(pg.sprite.Sprite):
             self.pos += self.vel * self.game.dt + 0.5 * self.acc * self.game.dt ** 2
             self.rect.center = self.pos
         else:
-            pass #add path thingie 
+            self.vel.x = -MOB_SPEED
+            self.pos += self.vel * self.game.dt 
+            self.rect.center = self.pos
+            # if(self.rect.center[0] <= 100):
+            #     self.vel.x = MOB_SPEED
+            #     self.rect.center += self.vel * self.game.dt
+
+            #Can be bound to area by giving x and y a limit
 
 class Wall(pg.sprite.Sprite):
     def __init__(self, game, x, y):

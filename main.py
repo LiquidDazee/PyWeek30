@@ -53,6 +53,11 @@ class Game:
         sys.exit()
 
     def update(self):
+        # Enemy hits player
+        hits = pg.sprite.spritecollide(self.player, self.mobs, False)
+        if (hits):
+            print("hit")
+            self.playing = False
         # update portion of the game loop
         self.all_sprites.update()
         self.camera.update(self.player)
