@@ -24,6 +24,13 @@ class Game:
         self.player_img = pg.image.load(path.join(img_folder, PLAYER_IMG)).convert_alpha()
         self.mob_img = pg.image.load(path.join(img_folder, MOB_IMG)).convert_alpha()
 
+        # lighting
+        self.fog = pg.Surface((WIDTH, HEIGHT))
+        self.fog.fill(NIGHT_COLOR)
+        self.light_mask_img = pg.image.load(path.join(img_folder, LIGHT_MASK)).convert_alpha()
+        self.light_mask = pg.transform.scale(self.light_mask_img, LIGHT_RADIUS)
+        self.light_rect = self.light_mask.get_rect()
+
     def new(self):
         # init all var and do all the setup for a new game
         self.all_sprites = pg.sprite.Group()
@@ -38,14 +45,16 @@ class Game:
         #             self.player = Player(self, col, row)
         #         if tile == 'E':
         #             Mob(self, col, row)
-        
+
         for tile_object in self.map.tmxdata.objects:
             if tile_object.name == 'player':
                 self.player = Player(self,tile_object.x, tile_object.y)
             if tile_object.name == 'wall':
                 Obstacle(self, tile_object.x, tile_object.y, tile_object.width, tile_object.height)
-            
+
         self.camera = Camera(self.map.width, self.map.height)
+        self.night = True
+        self.torch = False
 
     def run(self):
         # game loop - set self.playing = False to end the game
@@ -76,13 +85,30 @@ class Game:
         for y in range(0,HEIGHT, TILESIZE):
             pg.draw.line(self.screen, LIGHTGREY, (0,y), (WIDTH, y))
 
+    def render_fog(self):
+        # draw the light mask (gradient) onto fog image
+        self.fog.fill(NIGHT_COLOR)
+        # self.light_mask = pg.transform.scale(self.light_mask_img, light_depth)
+        self.light_rect.center = self.camera.apply(self.player).center
+        self.fog.blit(self.light_mask, self.light_rect)
+        self.screen.blit(self.fog, (0,0), special_flags = pg.BLEND_MULT)
+
     def draw(self):
         self.screen.blit(self.map_img, self.camera.apply_rect(self.map_rect))
         # self.screen.fill(BGCOLOR)
-        self.draw_grid()
+        # self.draw_grid()
         for sprite in self.all_sprites:
             self.screen.blit(sprite.image, self.camera.apply(sprite))
+
+        if self.night:
+            self.render_fog()
+
+        # if self.torch:
+        #     self.render_fog(TORCH_RADIUS)
+        # else:
+        #     self.render_fog(LIGHT_RADIUS)
         pg.display.flip()
+
 
     def events(self):
         # catch all events here
@@ -92,7 +118,10 @@ class Game:
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
                     self.quit()
-
+                if event.key == pg.K_n:
+                    self.night = not self.night
+                if event.key == pg.K_t:
+                    self.torch = not self.torch
     def show_start_screen(self):
         pass
 
