@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="64" tileheight="64" infinite="0" nextlayerid="15" nextobjectid="348">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="64" tileheight="64" infinite="0" nextlayerid="15" nextobjectid="349">
  <tileset firstgid="1" source="colored_packed_fix.tsx"/>
  <tileset firstgid="1057" source="colored_transparent_fix.tsx"/>
- <layer id="6" name="Base" width="64" height="64">
+ <layer id="6" name="Base" width="64" height="64" locked="1">
   <data encoding="csv">
 3221225724,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612986,1610612988,
 3221225722,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,250,
@@ -206,7 +206,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="7" name="can walk on" width="64" height="64">
+ <layer id="7" name="can walk on" width="64" height="64" locked="1">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,969,1610612797,2684354617,2684354617,2684354617,2684354617,2684354617,2684354617,2684354617,2684354617,2684354617,2684354617,2684354617,2684354617,2684354617,2684354617,2684354617,2684354617,2684354617,2684354617,2684354617,2684354617,2684354617,2684354617,2684354617,2684354618,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,969,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -583,13 +583,13 @@
   <object id="339" name="wall" x="0" y="64" width="66.6668" height="3968"/>
   <object id="340" name="wall" x="4032" y="0" width="66.6668" height="4096"/>
  </objectgroup>
- <objectgroup id="14" name="win" visible="0">
+ <objectgroup id="14" name="win">
   <object id="341" name="win" x="3968" y="3008" width="64" height="64"/>
   <object id="343" name="win" x="704" y="3968" width="64" height="64"/>
   <object id="344" name="win" x="64" y="64" width="64" height="64"/>
   <object id="345" name="win" x="2752" y="64" width="64" height="64"/>
  </objectgroup>
- <objectgroup id="12" name="player" visible="0">
+ <objectgroup id="12" name="player">
   <object id="311" name="player" x="1824" y="1920" width="48" height="48"/>
   <object id="330" name="items spot" x="2560" y="2624" width="64" height="64"/>
   <object id="331" name="items spot" x="2560" y="2624" width="64" height="64"/>
@@ -598,21 +598,22 @@
   <object id="334" name="rareitems" x="2752" y="2048" width="128" height="128"/>
   <object id="335" name="rareitems" x="3072" y="3648" width="128" height="128"/>
  </objectgroup>
- <objectgroup id="13" name="enemy spawn and stuf" visible="0">
+ <objectgroup id="13" name="enemy spawn and stuf">
   <object id="312" name="enemy" x="1984" y="640" width="64" height="64"/>
-  <object id="316" name="enemy path 1" x="1856" y="448" width="64" height="64"/>
+  <object id="316" name="enemy path 11" x="1856" y="448" width="64" height="64"/>
   <object id="317" x="1856" y="512" width="64"/>
-  <object id="318" name="enemy path 1" x="2176" y="448" width="64" height="64"/>
-  <object id="319" name="enemy path 1" x="2176" y="768" width="64" height="64"/>
-  <object id="320" name="enemy path 1" x="1856" y="768" width="64" height="64"/>
+  <object id="318" name="enemy path 12" x="2176" y="448" width="64" height="64"/>
+  <object id="319" name="enemy path 13" x="2176" y="768" width="64" height="64"/>
+  <object id="320" name="enemy path 14" x="1856" y="768" width="64" height="64"/>
   <object id="321" name="enemy" x="832" y="3456" width="64" height="64"/>
-  <object id="322" name="enemy path 2" x="704" y="3328" width="64" height="64"/>
-  <object id="323" name="enemy path 2" x="704" y="3648" width="64" height="64"/>
-  <object id="324" name="enemy path 2" x="1024" y="3648" width="64" height="64"/>
-  <object id="325" name="enemy path 2" x="1024" y="3328" width="64" height="64"/>
+  <object id="322" name="enemy path 21" x="704" y="3328" width="64" height="64"/>
+  <object id="323" name="enemy path 24" x="704" y="3648" width="64" height="64"/>
+  <object id="324" name="enemy path 23" x="1024" y="3648" width="64" height="64"/>
+  <object id="325" name="enemy path 22" x="1024" y="3328" width="64" height="64"/>
   <object id="326" name="enemy" x="3392" y="2880" width="64" height="64"/>
-  <object id="327" name="enemy path 3" x="3200" y="2688" width="64" height="64"/>
-  <object id="328" name="enemy path 3" x="3200" y="3136" width="64" height="64"/>
-  <object id="329" name="enemy path 3" x="3584" y="3136" width="64" height="64"/>
+  <object id="327" name="enemy path 31" x="3200" y="2688" width="64" height="64"/>
+  <object id="328" name="enemy path 34" x="3200" y="3136" width="64" height="64"/>
+  <object id="329" name="enemy path 33" x="3584" y="3136" width="64" height="64"/>
+  <object id="348" name="enemy path 32" x="3584" y="2688" width="64" height="64"/>
  </objectgroup>
 </map>

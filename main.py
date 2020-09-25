@@ -51,6 +51,10 @@ class Game:
                 self.player = Player(self,tile_object.x, tile_object.y)
             if tile_object.name == 'wall':
                 Obstacle(self, tile_object.x, tile_object.y, tile_object.width, tile_object.height)
+            if tile_object.name == 'win':
+                Obstacle(self, tile_object.x, tile_object.y, tile_object.width, tile_object.height)
+            if tile_object.name == 'enemy':
+                Mob(self, tile_object.x, tile_object.y)
 
         self.camera = Camera(self.map.width, self.map.height)
         self.night = True
