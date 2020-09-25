@@ -85,10 +85,11 @@ class Game:
         for y in range(0,HEIGHT, TILESIZE):
             pg.draw.line(self.screen, LIGHTGREY, (0,y), (WIDTH, y))
 
-    def render_fog(self):
+    def render_fog(self, light_depth):
         # draw the light mask (gradient) onto fog image
         self.fog.fill(NIGHT_COLOR)
-        # self.light_mask = pg.transform.scale(self.light_mask_img, light_depth)
+        self.light_mask = pg.transform.scale(self.light_mask_img, light_depth)
+        self.light_rect = self.light_mask.get_rect()
         self.light_rect.center = self.camera.apply(self.player).center
         self.fog.blit(self.light_mask, self.light_rect)
         self.screen.blit(self.fog, (0,0), special_flags = pg.BLEND_MULT)
@@ -100,13 +101,13 @@ class Game:
         for sprite in self.all_sprites:
             self.screen.blit(sprite.image, self.camera.apply(sprite))
 
-        if self.night:
-            self.render_fog()
+        # if self.night:
+        #     self.render_fog()
 
-        # if self.torch:
-        #     self.render_fog(TORCH_RADIUS)
-        # else:
-        #     self.render_fog(LIGHT_RADIUS)
+        if self.torch:
+            self.render_fog(TORCH_RADIUS)
+        else:
+            self.render_fog(LIGHT_RADIUS)
         pg.display.flip()
 
 
