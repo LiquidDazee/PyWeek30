@@ -8,10 +8,10 @@ class Player(pg.sprite.Sprite):
         self.groups = game.all_sprites
         pg.sprite.Sprite.__init__(self,self.groups)
         self.game = game
-        self.image = pg.transform.scale(game.player_img, (TILESIZE, TILESIZE)) #increase sprite size to tilesize
+        self.image = pg.transform.scale(game.player_img, (13, 13)) #increase sprite size to tilesize
         self.rect = self.image.get_rect()
         self.vel = vec(0,0)
-        self.pos = vec(x,y) * TILESIZE
+        self.pos = vec(x,y)
 
     def get_keys(self):
         self.vel = vec(0,0)
@@ -122,3 +122,14 @@ class Wall(pg.sprite.Sprite):
         self.y = y
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
+
+class Obstacle(pg.sprite.Sprite):
+    def __init__(self, game, x, y, w, h):
+        self.groups = game.walls
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.rect = pg.Rect(x,y,w,h)
+        self.x = x
+        self.y = y
+        self.rect.x = x
+        self.rect.y = y
