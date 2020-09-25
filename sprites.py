@@ -8,7 +8,7 @@ class Player(pg.sprite.Sprite):
         self.groups = game.all_sprites
         pg.sprite.Sprite.__init__(self,self.groups)
         self.game = game
-        self.image = pg.transform.scale(game.player_img, (13, 13)) #increase sprite size to tilesize
+        self.image = pg.transform.scale(game.player_img, (58, 58)) #increase sprite size to tilesize
         self.rect = self.image.get_rect()
         self.vel = vec(0,0)
         self.pos = vec(x,y)
