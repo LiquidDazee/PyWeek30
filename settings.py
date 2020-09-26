@@ -11,7 +11,7 @@ YELLOW = (255, 255, 0)
 WIDTH = 1024   # 16 * 64 or 32 * 32 or 64 * 16
 HEIGHT = 768  # 16 * 48 or 32 * 24 or 64 * 12
 FPS = 60
-TITLE = "TestGame"
+TITLE = "The Loast Coast"
 BGCOLOR = DARKGREY
 
 TILESIZE = 64
@@ -19,8 +19,16 @@ GRIDWIDTH = WIDTH / TILESIZE
 GRIDHEIGHT = HEIGHT / TILESIZE
 
 # player settings
-PLAYER_SPEED = 300
+PLAYER_SPEED = 500
 PLAYER_IMG = 'manBlue.png'
 
 # mob settings
 MOB_IMG = 'manBlue.png'
+MOB_SPEED = 400
+DETECT_RADIUS = 200
+
+# effects
+NIGHT_COLOR = (10,10,10)
+LIGHT_RADIUS = (420, 420)
+TORCH_RADIUS = (900,900)
+LIGHT_MASK = "light_350_soft.png"
