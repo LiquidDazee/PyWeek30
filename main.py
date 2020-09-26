@@ -15,9 +15,36 @@ class Game:
         pg.key.set_repeat(500,100)
         self.load_data()
 
+    def draw_text(self, text, font_name, size, color, x, y, align = "nw"):
+        font = pg.font.Font(font_name, size)
+        text_surface = font.render(text, True, color)
+        text_rect = text_surface.get_rect()
+        if align == "nw":
+            text_rect.topleft = (x, y)
+        if align == "ne":
+            text_rect.topright = (x, y)
+        if align == "sw":
+            text_rect.bottomleft = (x, y)
+        if align == "se":
+            text_rect.bottomright = (x, y)
+        if align == "n":
+            text_rect.midtop = (x, y)
+        if align == "s":
+            text_rect.midbottom = (x, y)
+        if align == "e":
+            text_rect.midright = (x, y)
+        if align == "w":
+            text_rect.midleft = (x, y)
+        if align == "center":
+            text_rect.center = (x, y)
+        self.screen.blit(text_surface, text_rect)
+
     def load_data(self):
         game_folder = path.dirname(__file__)
         img_folder = path.join(game_folder, 'img')
+        self.pause_font = path.join(game_folder, '8bitlimo.ttf')
+        self.dim_screen = pg.Surface(self.screen.get_size()).convert_alpha()
+        self.dim_screen.fill((0, 0, 0, 100))
         self.map = TiledMap(path.join(game_folder, 'map.tmx'))
         self.map_img = self.map.make_map()
         self.map_rect = self.map_img.get_rect()
@@ -59,6 +86,7 @@ class Game:
         self.camera = Camera(self.map.width, self.map.height)
         self.night = True
         self.torch = False
+        self.paused = False
 
     def run(self):
         # game loop - set self.playing = False to end the game
@@ -66,7 +94,8 @@ class Game:
         while self.playing:
             self.dt = self.clock.tick(FPS)/1000
             self.events()
-            self.update()
+            if not self.paused:
+                self.update()
             self.draw()
 
     def quit(self):
@@ -112,6 +141,10 @@ class Game:
             self.render_fog(TORCH_RADIUS)
         else:
             self.render_fog(LIGHT_RADIUS)
+        
+        if self.paused:
+            self.screen.blit(self.dim_screen, (0, 0))
+            self.draw_text("Paused", self.pause_font, 90, WHITE, WIDTH/2, HEIGHT/4, align = "center")
         pg.display.flip()
 
 
@@ -127,6 +160,9 @@ class Game:
                     self.night = not self.night
                 if event.key == pg.K_t:
                     self.torch = not self.torch
+                if event.key == pg.K_p:
+                    self.paused = not self.paused
+                
     def show_start_screen(self):
         pass
 
