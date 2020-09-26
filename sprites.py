@@ -26,7 +26,7 @@ class Player(pg.sprite.Sprite):
             self.vel.y = PLAYER_SPEED
         if self.vel.x!=0 and self.vel.y!=0:
             self.vel *= 0.7071
-
+ 
     def collide_with_walls(self, dir):
         if dir == 'x':
             hits = pg.sprite.spritecollide(self,self.game.walls, False)
@@ -47,6 +47,26 @@ class Player(pg.sprite.Sprite):
                 self.vel.y = 0
                 self.rect.y = self.pos.y
 
+    # def collide_with_boat(self, dir):
+    #     if dir == 'x':
+    #         hits = pg.sprite.spritecollide(self,self.game.boats, False)
+    #         if hits:
+    #             if self.vel.x>0:
+    #                 self.pos.x = hits[0].rect.left - self.rect.width
+    #             if self.vel.x<0:
+    #                 self.pos.x = hits[0].rect.right
+    #             self.vel.x = 0
+    #             self.rect.x = self.pos.x
+    #     if dir == 'y':
+    #         hits = pg.sprite.spritecollide(self,self.game.boats, False)
+    #         if hits:
+    #             if self.vel.y>0:
+    #                 self.pos.y = hits[0].rect.top - self.rect.height
+    #             if self.vel.y<0:
+    #                 self.pos.y = hits[0].rect.bottom
+    #             self.vel.y = 0
+    #             self.rect.y = self.pos.y
+
     def update(self):
         self.get_keys()
         self.pos += self.vel * self.game.dt
@@ -54,6 +74,10 @@ class Player(pg.sprite.Sprite):
         self.collide_with_walls('x')
         self.rect.y = self.pos.y
         self.collide_with_walls('y')
+        # self.rect.x = self.pos.x
+        # self.collide_with_boat('x')
+        # self.rect.y = self.pos.y
+        # self.collide_with_boat('y')
 
 
 class Mob(pg.sprite.Sprite):
@@ -65,13 +89,12 @@ class Mob(pg.sprite.Sprite):
         self.game = game
         self.image = pg.transform.scale(game.mob_img, (TILESIZE, TILESIZE))
         self.rect = self.image.get_rect()
-        self.pos = vec(x, y) * TILESIZE
+        self.pos = vec(x, y)
         self.vel = vec(-MOB_SPEED, 0)
         self.acc = vec(0, 0)
         self.rect.center = self.pos
         self.rot = 0
         self.target = game.player
-
 
     def update(self):
         target_dist = self.target.pos - self.pos
@@ -108,8 +131,6 @@ class Mob(pg.sprite.Sprite):
                 self.path.append(self.nextpos)
                 self.nextpos = self.path.popleft()
 
-
-
 class Wall(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.all_sprites, game.walls
@@ -126,6 +147,17 @@ class Wall(pg.sprite.Sprite):
 class Obstacle(pg.sprite.Sprite):
     def __init__(self, game, x, y, w, h):
         self.groups = game.walls
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.rect = pg.Rect(x,y,w,h)
+        self.x = x
+        self.y = y
+        self.rect.x = x
+        self.rect.y = y
+
+class Boat(pg.sprite.Sprite):
+    def __init__(self,game,x,y,w,h):
+        self.groups = game.boats
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         self.rect = pg.Rect(x,y,w,h)

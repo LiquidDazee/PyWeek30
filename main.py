@@ -7,6 +7,7 @@ from tilemap import *
 
 
 class Game:
+
     def __init__(self):
         pg.init()
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
@@ -36,7 +37,7 @@ class Game:
         if align == "w":
             text_rect.midleft = (x, y)
         if align == "center":
-            text_rect.center = (x, y)
+            text_rect.center = (round(x), round(y))
         self.screen.blit(text_surface, text_rect)
 
     def load_data(self):
@@ -63,13 +64,14 @@ class Game:
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
         self.mobs = pg.sprite.Group()
+        self.boats = pg.sprite.Group()
         # self.player = Player(self,10,10)
         # for row, tiles in enumerate(self.map.data):
-        #     for col, tile in enumerate(tiles):
-        #         if tile == '1':
-        #             Wall(self, col, row)
-        #         if tile == 'P':
-        #             self.player = Player(self, col, row)
+            # for col, tile in enumerate(tiles):
+            #     if tile == '1':
+            #         Wall(self, col, row)
+            #     if tile == 'P':
+            #         self.player = Player(self, col, row)
         #         if tile == 'E':
         #             Mob(self, col, row)
 
@@ -79,7 +81,7 @@ class Game:
             if tile_object.name == 'wall':
                 Obstacle(self, tile_object.x, tile_object.y, tile_object.width, tile_object.height)
             if tile_object.name == 'win':
-                Obstacle(self, tile_object.x, tile_object.y, tile_object.width, tile_object.height)
+                Boat(self, tile_object.x, tile_object.y, tile_object.width, tile_object.height)
             if tile_object.name == 'enemy':
                 Mob(self, tile_object.x, tile_object.y)
 
@@ -87,15 +89,18 @@ class Game:
         self.night = True
         self.torch = False
         self.paused = False
+        self.winner = False
 
     def run(self):
         # game loop - set self.playing = False to end the game
         self.playing = True
         while self.playing:
             self.dt = self.clock.tick(FPS)/1000
-            self.events()
             if not self.paused:
-                self.update()
+                if not self.winner:
+                   self.update()
+            self.events()
+
             self.draw()
 
     def quit(self):
@@ -108,6 +113,12 @@ class Game:
         if (hits):
             print("hit")
             self.playing = False
+
+        #win condition
+        win = pg.sprite.spritecollide(self.player, self.boats, False)
+        if(win):
+            print("you win")
+            self.winner = True
         # update portion of the game loop
         self.all_sprites.update()
         self.camera.update(self.player)
@@ -136,7 +147,6 @@ class Game:
 
         # if self.night:
         #     self.render_fog()
-
         if self.torch:
             self.render_fog(TORCH_RADIUS)
         else:
@@ -145,9 +155,14 @@ class Game:
         if self.paused:
             self.screen.blit(self.dim_screen, (0, 0))
             self.draw_text("Paused", self.pause_font, 90, WHITE, WIDTH/2, HEIGHT/4, align = "center")
+        
+        if self.winner:
+            self.screen.blit(self.dim_screen,(0,0))
+            self.draw_text("You Win!", self.pause_font, 90, WHITE, WIDTH/2, HEIGHT/4, align = "center")
+            self.draw_text("Press R to reset", self.pause_font, 45, WHITE, WIDTH/2, HEIGHT/2, align="center")
+
         pg.display.flip()
-
-
+    
     def events(self):
         # catch all events here
         for event in pg.event.get():
@@ -160,9 +175,13 @@ class Game:
                     self.night = not self.night
                 if event.key == pg.K_t:
                     self.torch = not self.torch
-                if event.key == pg.K_p:
+                if event.key == pg.K_p and self.winner != True:
                     self.paused = not self.paused
-                
+                if event.key == pg.K_r and self.winner == True:
+                    self.playing = False
+                # if event.key == pg.K_9:
+                #     self.winner = True
+
     def show_start_screen(self):
         pass
 
