@@ -44,7 +44,7 @@ class Game:
     def load_data(self):
         game_folder = path.dirname(__file__)
         img_folder = path.join(game_folder, 'img')
-        self.pause_font = path.join(game_folder, '8bitlimo.ttf')
+        self.pause_font = path.join(game_folder, 'Rixel.otf')
         self.dim_screen = pg.Surface(self.screen.get_size()).convert_alpha()
         self.dim_screen.fill((0, 0, 0, 100))
         self.map = TiledMap(path.join(game_folder, 'map.tmx'))
