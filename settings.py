@@ -1,5 +1,5 @@
 # define some colors (R, G, B)
-WHITE = (255, 255, 255)
+WHITE = (229, 229, 229)
 BLACK = (0, 0, 0)
 DARKGREY = (40, 40, 40)
 LIGHTGREY = (100, 100, 100)
@@ -30,10 +30,9 @@ DETECT_RADIUS = 300
 
 # effects
 NIGHT_COLOR = (20,20,20)
-LIGHT_RADIUS = (420, 420)
+LIGHT_RADIUS = (450, 450)
 TORCH_RADIUS = (900,900)
 LIGHT_MASK = "light_350_soft.png"
 
 # items
 ITEM_IMAGES={'torch':'torch.png', 'feather':'feather.png'}
-

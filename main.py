@@ -131,6 +131,8 @@ class Game:
         self.winner = False
         self.start = False
         self.feather = False
+        self.itemscreen_torch = False
+        self.itemscreen_feather = False
 
 
     def intro(self):
@@ -142,7 +144,6 @@ class Game:
 
 
     def run(self):
-
         # game loop - set self.playing = False to end the game
         self.playing = True
         self.intro()
@@ -162,7 +163,7 @@ class Game:
         # Enemy hits player
         hits = pg.sprite.spritecollide(self.player, self.mobs, False)
         if (hits):
-            print("hit")
+            # print("hit")
             pg.time.wait(1000)
             self.playing = False
 
@@ -176,14 +177,15 @@ class Game:
         for hit in hits:
             if (hit.type == 'torch'):
                 self.torch = True
+                self.itemscreen_torch = True
             if (hit.type == 'feather'):
                 self.feather = True
+                self.itemscreen_feather = True
         # update portion of the game loop
         self.all_sprites.update()
         self.camera.update(self.player)
         if self.feather:
             self.player.player_speed = 600
-        print(self.feather)
 
     def draw_grid(self):
         for x in range(0,WIDTH, TILESIZE):
@@ -222,18 +224,30 @@ class Game:
             self.screen.blit(self.dim_screen, (0, 0))
             self.draw_text("THE LOAST COAST", self.pause_font, 90, WHITE, WIDTH/2, HEIGHT/4, align = "center")
             self.draw_text("You're Abhiroop.", self.pause_font, 30, WHITE, WIDTH/2, HEIGHT/2, align = "center")
-            self.draw_text("You're on the haunted island of Salty Sam's", self.pause_font, 30, WHITE, WIDTH/2, HEIGHT/2+32, align="center")
-            self.draw_text("ghost. You must escape from this island", self.pause_font, 30, WHITE, WIDTH/2, HEIGHT/2+64, align="center")
-            self.draw_text("before he finds you and resets you back to", self.pause_font, 30, WHITE, WIDTH/2, HEIGHT/2+96, align="center")
-            self.draw_text("spawn. Press any key to continue.", self.pause_font, 30, WHITE, WIDTH/2, HEIGHT/2+128, align="center")
-           
-            # ptext.draw("This is a long enough sentence to test this out.", centery = 50, right = 300 , fontname = self.pause_font, fontsize = 32)
+            self.draw_text("You've been stranded on the island haunted", self.pause_font, 30, WHITE, WIDTH/2, HEIGHT/2+32, align="center")
+            self.draw_text("by Salty Sam's ghost. You must escape from", self.pause_font, 30, WHITE, WIDTH/2, HEIGHT/2+64, align="center")
+            self.draw_text("this island before he finds you and resets", self.pause_font, 30, WHITE, WIDTH/2, HEIGHT/2+96, align="center")
+            self.draw_text("you back to spawn. Press any key to", self.pause_font, 30, WHITE, WIDTH/2, HEIGHT/2+128, align="center")
+            self.draw_text("continue.", self.pause_font, 30, WHITE, WIDTH/2, HEIGHT/2+160, align="center")
+            self.draw_text("(Pro tip: WASD to move, P to Pause, Esc to Quit)", self.pause_font, 20, WHITE, WIDTH/2, HEIGHT-100, align="center")
 
         if self.winner:
             self.screen.blit(self.dim_screen,(0,0))
             self.draw_text("You Win!", self.pause_font, 90, WHITE, WIDTH/2, HEIGHT/4, align = "center")
-            self.draw_text("Press R to reset, or Esc to say goodbye to Salty Sam.", self.pause_font, 45, WHITE, WIDTH/2, HEIGHT/2, align="center")
+            self.draw_text("Press R to reset", self.pause_font, 30, WHITE, WIDTH/2, HEIGHT/2, align="center")
+            self.draw_text("Press Esc to quit", self.pause_font, 30, WHITE, WIDTH/2, HEIGHT/2+32, align="center")
 
+        if self.itemscreen_torch:
+            self.screen.blit(self.dim_screen, (0, 0))
+            self.draw_text("By the virtue of the glasses of Neelak,", self.pause_font, 30, WHITE, WIDTH/2, HEIGHT/2, align = "center")
+            self.draw_text("You can now see a little better.", self.pause_font, 30, WHITE, WIDTH/2, HEIGHT/2+32, align="center")
+            self.draw_text("Press Q to continue.", self.pause_font, 30, WHITE, WIDTH/2, HEIGHT/2+64, align="center")
+
+        if self.itemscreen_feather:
+            self.screen.blit(self.dim_screen, (0, 0))
+            self.draw_text("By the virtue of Monty's Porsche in", self.pause_font, 30, WHITE, WIDTH/2, HEIGHT/2, align = "center")
+            self.draw_text("the States, you now run faster.", self.pause_font, 30, WHITE, WIDTH/2, HEIGHT/2+32, align="center")
+            self.draw_text("Press Q to continue.", self.pause_font, 30, WHITE, WIDTH/2, HEIGHT/2+64, align="center")
 
         pg.display.flip()
 
@@ -246,16 +260,17 @@ class Game:
                 self.start = False
                 if event.key == pg.K_ESCAPE:
                     self.quit()
-                if event.key == pg.K_n:
-                    self.night = not self.night
-                if event.key == pg.K_t:
-                    self.torch = not self.torch
                 if event.key == pg.K_p and self.winner != True:
                     self.paused = not self.paused
                 if event.key == pg.K_r and self.winner == True:
                     self.playing = False
-                if event.key == pg.K_f:
-                    self.feather = not self.feather
+
+                if event.key == pg.K_q:
+                    self.itemscreen_torch = False
+                    self.itemscreen_feather = False
+                    
+
+
 
     def show_start_screen(self):
         pass
