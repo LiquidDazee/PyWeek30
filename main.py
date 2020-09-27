@@ -61,7 +61,7 @@ class Game:
         self.item_images = {}
         for item in ITEM_IMAGES:
             self.item_images[item] = pg.image.load(path.join(img_folder, ITEM_IMAGES[item])).convert_alpha()
-        self.path = {}
+        self.path = []
 
 
     def new(self):
@@ -90,13 +90,16 @@ class Game:
                 Boat(self, tile_object.x, tile_object.y, tile_object.width, tile_object.height)
 
             for i in range(1, 4):
+                cur_path = []
                 for j in range(1,5):
                     cur_pos = ()
                     if tile_object.name == 'enemy path {}{}'.format(i,j):
                         cur_pos = (tile_object.x, tile_object.y)
-                        path[i].append(cur_pos)
+                        cur_path.append(cur_pos)
+                        # path[i].append(cur_pos)
+                # path[i] = cur_path
                 if tile_object.name == 'enemy{}'.format(i):
-                    Mob(self, tile_object.x, tile_object.y, path[i])
+                    Mob(self, tile_object.x, tile_object.y, cur_path)
 
             # if tile_object.name == 'enemy':
             #     Mob(self, tile_object.x, tile_object.y)
@@ -138,9 +141,10 @@ class Game:
             print("you win")
             self.winner = True
 
-        hit = pg.sprite.spritecollide(self.player, self.items, True)
-        if (hit.type == 'health'):
-            self.torch = True
+        hits = pg.sprite.spritecollide(self.player, self.items, True)
+        for hit in hits:
+            if (hit.type == 'torch'):
+                self.torch = True
         # update portion of the game loop
         self.all_sprites.update()
         self.camera.update(self.player)
