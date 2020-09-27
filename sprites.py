@@ -26,7 +26,7 @@ class Player(pg.sprite.Sprite):
             self.vel.y = PLAYER_SPEED
         if self.vel.x!=0 and self.vel.y!=0:
             self.vel *= 0.7071
- 
+
     def collide_with_walls(self, dir):
         if dir == 'x':
             hits = pg.sprite.spritecollide(self,self.game.walls, False)
@@ -79,10 +79,10 @@ class Player(pg.sprite.Sprite):
         # self.rect.y = self.pos.y
         # self.collide_with_boat('y')
 
-
 class Mob(pg.sprite.Sprite):
-    def __init__(self, game, x, y):
-        self.path = deque([vec(200,200), vec(200,600),vec(600,600),vec(600,200)])
+    def __init__(self, game, x, y, path):
+        # self.path = deque([vec(200,200), vec(200,600),vec(600,600),vec(600,200)])
+        self.path = deque(path)
         self.nextpos = self.path.popleft()
         self.groups = game.all_sprites, game.mobs
         pg.sprite.Sprite.__init__(self, self.groups)
@@ -156,6 +156,7 @@ class Obstacle(pg.sprite.Sprite):
         self.rect.y = y
 
 class Boat(pg.sprite.Sprite):
+
     def __init__(self,game,x,y,w,h):
         self.groups = game.boats
         pg.sprite.Sprite.__init__(self, self.groups)
@@ -165,3 +166,13 @@ class Boat(pg.sprite.Sprite):
         self.y = y
         self.rect.x = x
         self.rect.y = y
+
+class Item(pg.sprite.Sprite):
+    def __init__(self, game, pos, type):
+        self.groups = game.all_sprites, game.items
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.image = game.item_images[type]
+        self.rect = self.image.get_rect()
+        self.type = type
+        self.rect.center = pos

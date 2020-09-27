@@ -59,6 +59,11 @@ class Game:
         self.light_mask_img = pg.image.load(path.join(img_folder, LIGHT_MASK)).convert_alpha()
         self.light_mask = pg.transform.scale(self.light_mask_img, LIGHT_RADIUS)
         self.light_rect = self.light_mask.get_rect()
+        self.item_images = {}
+        for item in ITEM_IMAGES:
+            self.item_images[item] = pg.image.load(path.join(img_folder, ITEM_IMAGES[item])).convert_alpha()
+        self.path = []
+
 
     def new(self):
         # init all var and do all the setup for a new game
@@ -66,6 +71,7 @@ class Game:
         self.walls = pg.sprite.Group()
         self.mobs = pg.sprite.Group()
         self.boats = pg.sprite.Group()
+        self.items = pg.sprite.Group()
         # self.player = Player(self,10,10)
         # for row, tiles in enumerate(self.map.data):
             # for col, tile in enumerate(tiles):
@@ -83,8 +89,23 @@ class Game:
                 Obstacle(self, tile_object.x, tile_object.y, tile_object.width, tile_object.height)
             if tile_object.name == 'win':
                 Boat(self, tile_object.x, tile_object.y, tile_object.width, tile_object.height)
-            if tile_object.name == 'enemy':
-                Mob(self, tile_object.x, tile_object.y)
+
+            for i in range(1, 4):
+                cur_path = []
+                for j in range(1,5):
+                    cur_pos = ()
+                    if tile_object.name == 'enemy path {}{}'.format(i,j):
+                        cur_pos = (tile_object.x, tile_object.y)
+                        cur_path.append(cur_pos)
+                        # path[i].append(cur_pos)
+                # path[i] = cur_path
+                if tile_object.name == 'enemy{}'.format(i):
+                    Mob(self, tile_object.x, tile_object.y, cur_path)
+
+            # if tile_object.name == 'enemy':
+            #     Mob(self, tile_object.x, tile_object.y)
+            if tile_object.name in ['torch']:
+                Item(self,(tile_object.x, tile_object.y), tile_object.name)
 
         self.camera = Camera(self.map.width, self.map.height)
         self.night = True
@@ -131,6 +152,11 @@ class Game:
         if(win):
             print("you win")
             self.winner = True
+
+        hits = pg.sprite.spritecollide(self.player, self.items, True)
+        for hit in hits:
+            if (hit.type == 'torch'):
+                self.torch = True
         # update portion of the game loop
         self.all_sprites.update()
         self.camera.update(self.player)
@@ -163,23 +189,22 @@ class Game:
             self.render_fog(TORCH_RADIUS)
         else:
             self.render_fog(LIGHT_RADIUS)
-        
+
         if self.paused:
             self.screen.blit(self.dim_screen, (0, 0))
             self.draw_text("Paused", self.pause_font, 90, WHITE, WIDTH/2, HEIGHT/4, align = "center")
-
+            
         if self.start:
             self.screen.blit(self.dim_screen, (0, 0))
             self.draw_text("Press any key to start", self.pause_font, 70, WHITE, WIDTH/2, HEIGHT/4, align = "center")
 
-        
         if self.winner:
             self.screen.blit(self.dim_screen,(0,0))
             self.draw_text("You Win!", self.pause_font, 90, WHITE, WIDTH/2, HEIGHT/4, align = "center")
             self.draw_text("Press R to reset", self.pause_font, 45, WHITE, WIDTH/2, HEIGHT/2, align="center")
 
         pg.display.flip()
-    
+
     def events(self):
         # catch all events here
         for event in pg.event.get():
@@ -211,4 +236,3 @@ while True:
     g.new()
     g.run()
     g.show_go_screen()
-
