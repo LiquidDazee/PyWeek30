@@ -111,6 +111,9 @@ class Game:
             if tile_object.name in ['torch']:
                 Item(self,(tile_object.x, tile_object.y), tile_object.name)
 
+            if tile_object.name in ['feather']:
+                Item(self,(tile_object.x, tile_object.y), tile_object.name)
+
         for tile_object in self.map.tmxdata.objects:
             if tile_object.name == 'enemy 1':
                 Mob(self, tile_object.x, tile_object.y, self.path1)
@@ -128,6 +131,7 @@ class Game:
         self.paused = False
         self.winner = False
         self.start = False
+        self.feather = False
 
 
     def intro(self):
@@ -173,9 +177,14 @@ class Game:
         for hit in hits:
             if (hit.type == 'torch'):
                 self.torch = True
+            if (hit.type == 'feather'):
+                self.feather = True
         # update portion of the game loop
         self.all_sprites.update()
         self.camera.update(self.player)
+        if self.feather:
+            self.player.player_speed = 600
+        print(self.feather)
 
     def draw_grid(self):
         for x in range(0,WIDTH, TILESIZE):
@@ -238,6 +247,8 @@ class Game:
                     self.paused = not self.paused
                 if event.key == pg.K_r and self.winner == True:
                     self.playing = False
+                if event.key == pg.K_f:
+                    self.feather = not self.feather
 
     def show_start_screen(self):
         pass

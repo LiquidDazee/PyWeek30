@@ -19,7 +19,8 @@ GRIDWIDTH = WIDTH / TILESIZE
 GRIDHEIGHT = HEIGHT / TILESIZE
 
 # player settings
-PLAYER_SPEED = 500
+PLAYER_SPEED_MODIFIER = 1
+PLAYER_SPEED = 400
 PLAYER_IMG = 'manBlue.png'
 
 # mob settings
@@ -28,10 +29,11 @@ MOB_SPEED = 400
 DETECT_RADIUS = 300
 
 # effects
-NIGHT_COLOR = (10,10,10)
+NIGHT_COLOR = (20,20,20)
 LIGHT_RADIUS = (420, 420)
 TORCH_RADIUS = (900,900)
 LIGHT_MASK = "light_350_soft.png"
 
 # items
-ITEM_IMAGES={'torch':'torch.png'}
+ITEM_IMAGES={'torch':'torch.png', 'feather':'feather.png'}
+
