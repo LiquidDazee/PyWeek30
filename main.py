@@ -164,7 +164,7 @@ class Game:
         hits = pg.sprite.spritecollide(self.player, self.mobs, False)
         if (hits):
             # print("hit")
-            pg.time.wait(1000)
+            pg.time.wait(1500)
             self.playing = False
 
         #win condition
@@ -268,7 +268,7 @@ class Game:
                 if event.key == pg.K_q:
                     self.itemscreen_torch = False
                     self.itemscreen_feather = False
-                    
+
 
 
 
