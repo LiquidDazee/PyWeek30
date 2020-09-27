@@ -62,7 +62,10 @@ class Game:
         self.item_images = {}
         for item in ITEM_IMAGES:
             self.item_images[item] = pg.image.load(path.join(img_folder, ITEM_IMAGES[item])).convert_alpha()
-        self.path = []
+        self.path1 = ['','','','']
+        self.path2 = ['','','','']
+        self.path3 = ['','','','']
+
 
 
     def new(self):
@@ -72,15 +75,6 @@ class Game:
         self.mobs = pg.sprite.Group()
         self.boats = pg.sprite.Group()
         self.items = pg.sprite.Group()
-        # self.player = Player(self,10,10)
-        # for row, tiles in enumerate(self.map.data):
-            # for col, tile in enumerate(tiles):
-            #     if tile == '1':
-            #         Wall(self, col, row)
-            #     if tile == 'P':
-            #         self.player = Player(self, col, row)
-        #         if tile == 'E':
-        #             Mob(self, col, row)
 
         for tile_object in self.map.tmxdata.objects:
             if tile_object.name == 'player':
@@ -89,23 +83,44 @@ class Game:
                 Obstacle(self, tile_object.x, tile_object.y, tile_object.width, tile_object.height)
             if tile_object.name == 'win':
                 Boat(self, tile_object.x, tile_object.y, tile_object.width, tile_object.height)
+            if tile_object.name == 'enemy path 11':
+                self.path1[0] = (tile_object.x, tile_object.y)
+            if tile_object.name == 'enemy path 12':
+                self.path1[1] = (tile_object.x, tile_object.y)
+            if tile_object.name == 'enemy path 13':
+                self.path1[2] = (tile_object.x, tile_object.y)
+            if tile_object.name == 'enemy path 14':
+                self.path1[3] = (tile_object.x, tile_object.y)
+            if tile_object.name == 'enemy path 21':
+                self.path2[0] = (tile_object.x, tile_object.y)
+            if tile_object.name == 'enemy path 22':
+                self.path2[1] = (tile_object.x, tile_object.y)
+            if tile_object.name == 'enemy path 23':
+                self.path2[2] = (tile_object.x, tile_object.y)
+            if tile_object.name == 'enemy path 24':
+                self.path2[3] = (tile_object.x, tile_object.y)
+            if tile_object.name == 'enemy path 31':
+                self.path3[0] = (tile_object.x, tile_object.y)
+            if tile_object.name == 'enemy path 32':
+                self.path3[1] = (tile_object.x, tile_object.y)
+            if tile_object.name == 'enemy path 33':
+                self.path3[2] = (tile_object.x, tile_object.y)
+            if tile_object.name == 'enemy path 34':
+                self.path3[3] = (tile_object.x, tile_object.y)
 
-            for i in range(1, 4):
-                cur_path = []
-                for j in range(1,5):
-                    cur_pos = ()
-                    if tile_object.name == 'enemy path {}{}'.format(i,j):
-                        cur_pos = (tile_object.x, tile_object.y)
-                        cur_path.append(cur_pos)
-                        # path[i].append(cur_pos)
-                # path[i] = cur_path
-                if tile_object.name == 'enemy{}'.format(i):
-                    Mob(self, tile_object.x, tile_object.y, cur_path)
-
-            # if tile_object.name == 'enemy':
-            #     Mob(self, tile_object.x, tile_object.y)
             if tile_object.name in ['torch']:
                 Item(self,(tile_object.x, tile_object.y), tile_object.name)
+
+        for tile_object in self.map.tmxdata.objects:
+            if tile_object.name == 'enemy 1':
+                Mob(self, tile_object.x, tile_object.y, self.path1)
+                # print("Mob1 added")
+            if tile_object.name == 'enemy 2':
+                Mob(self, tile_object.x, tile_object.y, self.path2)
+                # print("Mob2 added")
+            if tile_object.name == 'enemy 3':
+                Mob(self, tile_object.x, tile_object.y, self.path3)
+                # print("Mob3 added")
 
         self.camera = Camera(self.map.width, self.map.height)
         self.night = True
@@ -113,8 +128,8 @@ class Game:
         self.paused = False
         self.winner = False
         self.start = False
-        
-    
+
+
     def intro(self):
         if not self.introduced:
             self.start =  True
@@ -123,8 +138,8 @@ class Game:
             print("I feel dizzy...")
 
 
-    def run(self):   
-              
+    def run(self):
+
         # game loop - set self.playing = False to end the game
         self.playing = True
         self.intro()
@@ -145,6 +160,7 @@ class Game:
         hits = pg.sprite.spritecollide(self.player, self.mobs, False)
         if (hits):
             print("hit")
+            pg.time.wait(1000)
             self.playing = False
 
         #win condition
@@ -193,7 +209,7 @@ class Game:
         if self.paused:
             self.screen.blit(self.dim_screen, (0, 0))
             self.draw_text("Paused", self.pause_font, 90, WHITE, WIDTH/2, HEIGHT/4, align = "center")
-            
+
         if self.start:
             self.screen.blit(self.dim_screen, (0, 0))
             self.draw_text("Press any key to start", self.pause_font, 70, WHITE, WIDTH/2, HEIGHT/4, align = "center")
@@ -222,7 +238,7 @@ class Game:
                     self.paused = not self.paused
                 if event.key == pg.K_r and self.winner == True:
                     self.playing = False
-            
+
     def show_start_screen(self):
         pass
 

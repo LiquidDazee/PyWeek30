@@ -25,7 +25,7 @@ PLAYER_IMG = 'manBlue.png'
 # mob settings
 MOB_IMG = 'manBlue.png'
 MOB_SPEED = 400
-DETECT_RADIUS = 200
+DETECT_RADIUS = 300
 
 # effects
 NIGHT_COLOR = (10,10,10)
