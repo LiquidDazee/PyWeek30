@@ -14,6 +14,7 @@ class Game:
         pg.display.set_caption(TITLE)
         self.clock = pg.time.Clock()
         pg.key.set_repeat(500,100)
+        self.introduced = False
         self.load_data()
 
     def draw_text(self, text, font_name, size, color, x, y, align = "nw"):
@@ -90,10 +91,19 @@ class Game:
         self.torch = False
         self.paused = False
         self.winner = False
+        
+    
+    def intro(self):
+        if not self.introduced:
+            print("once upon a time")
+            self.introduced =  True
+        else:
+            print("I feel dizzy...")
 
     def run(self):
         # game loop - set self.playing = False to end the game
         self.playing = True
+        self.intro()
         while self.playing:
             self.dt = self.clock.tick(FPS)/1000
             if not self.paused:
@@ -195,3 +205,4 @@ while True:
     g.new()
     g.run()
     g.show_go_screen()
+
