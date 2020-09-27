@@ -32,3 +32,6 @@ NIGHT_COLOR = (10,10,10)
 LIGHT_RADIUS = (420, 420)
 TORCH_RADIUS = (900,900)
 LIGHT_MASK = "light_350_soft.png"
+
+# items
+ITEM_IMAGES={'torch':'torch.png'}
