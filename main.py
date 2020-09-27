@@ -91,16 +91,18 @@ class Game:
         self.torch = False
         self.paused = False
         self.winner = False
+        self.start = False
         
     
     def intro(self):
         if not self.introduced:
-            print("once upon a time")
-            self.introduced =  True
+            self.start =  True
         else:
             print("I feel dizzy...")
 
-    def run(self):
+
+    def run(self):   
+              
         # game loop - set self.playing = False to end the game
         self.playing = True
         self.intro()
@@ -165,6 +167,11 @@ class Game:
         if self.paused:
             self.screen.blit(self.dim_screen, (0, 0))
             self.draw_text("Paused", self.pause_font, 90, WHITE, WIDTH/2, HEIGHT/4, align = "center")
+
+        if self.start:
+            self.screen.blit(self.dim_screen, (0, 0))
+            self.draw_text("Press any key to start", self.pause_font, 70, WHITE, WIDTH/2, HEIGHT/4, align = "center")
+
         
         if self.winner:
             self.screen.blit(self.dim_screen,(0,0))
@@ -179,6 +186,7 @@ class Game:
             if event.type == pg.QUIT:
                 self.quit()
             if event.type == pg.KEYDOWN:
+                self.start = False
                 if event.key == pg.K_ESCAPE:
                     self.quit()
                 if event.key == pg.K_n:
