@@ -97,6 +97,7 @@ class Game:
     def intro(self):
         if not self.introduced:
             self.start =  True
+            self.introduced = True
         else:
             print("I feel dizzy...")
 
@@ -112,7 +113,6 @@ class Game:
                 if not self.winner:
                    self.update()
             self.events()
-
             self.draw()
 
     def quit(self):
@@ -197,9 +197,7 @@ class Game:
                     self.paused = not self.paused
                 if event.key == pg.K_r and self.winner == True:
                     self.playing = False
-                # if event.key == pg.K_9:
-                #     self.winner = True
-
+            
     def show_start_screen(self):
         pass
 
