@@ -14,6 +14,7 @@ class Game:
         pg.display.set_caption(TITLE)
         self.clock = pg.time.Clock()
         pg.key.set_repeat(500,100)
+        self.introduced = False
         self.load_data()
 
     def draw_text(self, text, font_name, size, color, x, y, align = "nw"):
@@ -111,17 +112,28 @@ class Game:
         self.torch = False
         self.paused = False
         self.winner = False
+        self.start = False
+        
+    
+    def intro(self):
+        if not self.introduced:
+            self.start =  True
+            self.introduced = True
+        else:
+            print("I feel dizzy...")
 
-    def run(self):
+
+    def run(self):   
+              
         # game loop - set self.playing = False to end the game
         self.playing = True
+        self.intro()
         while self.playing:
             self.dt = self.clock.tick(FPS)/1000
             if not self.paused:
                 if not self.winner:
                    self.update()
             self.events()
-
             self.draw()
 
     def quit(self):
@@ -181,6 +193,10 @@ class Game:
         if self.paused:
             self.screen.blit(self.dim_screen, (0, 0))
             self.draw_text("Paused", self.pause_font, 90, WHITE, WIDTH/2, HEIGHT/4, align = "center")
+            
+        if self.start:
+            self.screen.blit(self.dim_screen, (0, 0))
+            self.draw_text("Press any key to start", self.pause_font, 70, WHITE, WIDTH/2, HEIGHT/4, align = "center")
 
         if self.winner:
             self.screen.blit(self.dim_screen,(0,0))
@@ -195,6 +211,7 @@ class Game:
             if event.type == pg.QUIT:
                 self.quit()
             if event.type == pg.KEYDOWN:
+                self.start = False
                 if event.key == pg.K_ESCAPE:
                     self.quit()
                 if event.key == pg.K_n:
@@ -205,9 +222,7 @@ class Game:
                     self.paused = not self.paused
                 if event.key == pg.K_r and self.winner == True:
                     self.playing = False
-                # if event.key == pg.K_9:
-                #     self.winner = True
-
+            
     def show_start_screen(self):
         pass
 
