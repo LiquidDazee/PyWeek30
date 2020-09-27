@@ -24,7 +24,7 @@ PLAYER_SPEED = 400
 PLAYER_IMG = 'manBlue.png'
 
 # mob settings
-MOB_IMG = 'manBlue.png'
+MOB_IMG = 'enemy.png'
 MOB_SPEED = 400
 DETECT_RADIUS = 300
 

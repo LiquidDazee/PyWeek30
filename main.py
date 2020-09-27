@@ -5,7 +5,6 @@ from settings import *
 from sprites import *
 from tilemap import *
 
-
 class Game:
 
     def __init__(self):
@@ -221,12 +220,20 @@ class Game:
 
         if self.start:
             self.screen.blit(self.dim_screen, (0, 0))
-            self.draw_text("Press any key to start", self.pause_font, 70, WHITE, WIDTH/2, HEIGHT/4, align = "center")
+            self.draw_text("THE LOAST COAST", self.pause_font, 90, WHITE, WIDTH/2, HEIGHT/4, align = "center")
+            self.draw_text("You're Abhiroop.", self.pause_font, 30, WHITE, WIDTH/2, HEIGHT/2, align = "center")
+            self.draw_text("You're on the haunted island of Salty Sam's", self.pause_font, 30, WHITE, WIDTH/2, HEIGHT/2+32, align="center")
+            self.draw_text("ghost. You must escape from this island", self.pause_font, 30, WHITE, WIDTH/2, HEIGHT/2+64, align="center")
+            self.draw_text("before he finds you and resets you back to", self.pause_font, 30, WHITE, WIDTH/2, HEIGHT/2+96, align="center")
+            self.draw_text("spawn. Press any key to continue.", self.pause_font, 30, WHITE, WIDTH/2, HEIGHT/2+128, align="center")
+           
+            # ptext.draw("This is a long enough sentence to test this out.", centery = 50, right = 300 , fontname = self.pause_font, fontsize = 32)
 
         if self.winner:
             self.screen.blit(self.dim_screen,(0,0))
             self.draw_text("You Win!", self.pause_font, 90, WHITE, WIDTH/2, HEIGHT/4, align = "center")
-            self.draw_text("Press R to reset", self.pause_font, 45, WHITE, WIDTH/2, HEIGHT/2, align="center")
+            self.draw_text("Press R to reset, or Esc to say goodbye to Salty Sam.", self.pause_font, 45, WHITE, WIDTH/2, HEIGHT/2, align="center")
+
 
         pg.display.flip()
 
